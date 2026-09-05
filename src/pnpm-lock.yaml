@@ -108,6 +108,12 @@ importers:
         specifier: workspace:*
         version: link:../../node_scripts
 
+  themes/Pnab:
+    devDependencies:
+      '@mapas/scripts':
+        specifier: workspace:*
+        version: link:../../node_scripts
+
 packages:
 
   '@ampproject/remapping@2.3.0':

@@ -35,17 +35,20 @@ services:
       - ./docker-data/private-files:/var/www/private-files
       
       - ../docker/development/router.php:/var/www/dev/router.php
-
+      ## Theme (submódulo em src/themes/Pnab, já incluído no mount de ../src)
+      - ../src/themes/Pnab:/var/www/src/themes/Pnab
+      ## Plugin AldirBlanc (submódulo em src/plugins/AldirBlanc)
+      - ../src/plugins/AldirBlanc:/var/www/src/plugins/AldirBlanc
 
     links:
       - db
       - redis
       - sessions
       
-    environment:  
+    environment:
       - REDIRECT_404_ASSETS_TO=
-
-      - BUILD_ASSETS=0
+      - BUILD_ASSETS=1
+      - CI=true
       - PENDING_PCACHE_RECREATION_INTERVAL=5
       - JOBS_INTERVAL=5
       - REDIS_CACHE=redis
