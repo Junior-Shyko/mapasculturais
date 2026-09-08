@@ -58,11 +58,34 @@ services:
       - MC_UPDATES_PROCESSES=4
       
       # chaves de teste do google recaptcha
-      - GOOGLE_RECAPTCHA_SITEKEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
-      - GOOGLE_RECAPTCHA_SECRET=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+      - GOOGLE_RECAPTCHA_SITEKEY=6LdpNqotAAAAAGTY2DjyY0TP1PZcrzG0MBpwjxpp
+      - GOOGLE_RECAPTCHA_SECRET=6LdpNqotAAAAAKz3eNAfIkyRTWuOaahfLd9-ZAU7
+      # usadas pelo componente mc-captcha (login da Pnab); sem elas config/captcha.php
+      # resolve sitekey/secret como null e o widget de login nunca renderiza
+      - CAPTCHA_SITEKEY=6LdpNqotAAAAAGTY2DjyY0TP1PZcrzG0MBpwjxpp
+      - CAPTCHA_SECRET=6LdpNqotAAAAAKz3eNAfIkyRTWuOaahfLd9-ZAU7
 
       - SESSIONS_SAVE_PATH=tcp://sessions:6379
 
+      - PNAB_CULTBR_MODE=development
+      - PNAB_CULTBR_HOST=https://back.gestao.hmg.cultbr.cultura.gov.br/api/v1
+      - PNAB_CULTBR_TOKEN=““
+
+      # PRIMEIRA FASE DA INTEGRAÇÃO (BUSCAR DADOS DO GESTOR E ENTES FEDERADOS)
+      - PNAB_CULTBR_SEFIC_ENDPOINT="par/sefic"
+      - PNAB_CULTBR_GESTOR_ENDPOINT="pessoa/{document}"
+
+      # SEGUNDA FASE DA INTEGRAÇÃO (ENVIO DE OPPORTUNIDADES PARA O BACKEND DO CULTBR)
+      - PNAB_CULTBR_CREATE_OPORTUNIDADE_ENDPOINT="integracao/oportunidades"
+      - PNAB_CULTBR_UPDATE_OPORTUNIDADE_ENDPOINT="integracao/oportunidades/{id}"
+      - ALDIRBLANC_SUBSITE_ID=103
+      - ALDIRBLANC_APPLICATION_NAME="ALDIRBLANC_TOKEN_CULTBR"
+      - ALDIRBLANC_INTEGRATION_CACHE_TTL=
+      - ALDIRBLANC_INTEGRATION_DELAY_JOB='+10 seconds'
+      - ALDIRBLANC_INTEGRATION_RETRY_DELAY_JOB='+15 seconds'
+
+      # DADOS DO PAR
+      - PNAB_CULTBR_PAR_ACOES_ENDPOINT="par/sefic/acoes"
     depends_on:
       - db
       - redis
