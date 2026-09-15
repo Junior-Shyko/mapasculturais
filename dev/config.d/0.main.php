@@ -4,7 +4,7 @@ $__process_assets = false;
 
 return [
     /* MAIN */
-    'themes.active' => 'Pnab',
+    //'themes.active' => '',
     'app.mode' => $_ENV['APP_MODE'],
     'doctrine.isDev' => false, // deixe true somente se estiver trabalhando nos mapeamentos das entidades
     

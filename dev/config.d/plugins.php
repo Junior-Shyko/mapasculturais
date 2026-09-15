@@ -3,6 +3,7 @@
 return [
     'plugins' => [
         "MultipleLocalAuth",
-        "AldirBlanc"
+        "AldirBlanc",
+        "ConectaEnte"
     ]
 ];
