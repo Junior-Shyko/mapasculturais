@@ -7,3 +7,6 @@
 [submodule "src/plugins/MultipleLocalAuth"]
 	path = src/plugins/MultipleLocalAuth
 	url = https://github.com/mapasculturais/plugin-MultipleLocalAuth.git
+[submodule "src/plugins/ConectaEnte"]
+	path = src/plugins/ConectaEnte
+	url = git@github.com:culturagovbr/plugin-ConectaEnte.git
