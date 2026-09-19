@@ -10,3 +10,12 @@
 [submodule "src/plugins/ConectaEnte"]
 	path = src/plugins/ConectaEnte
 	url = git@github.com:culturagovbr/plugin-ConectaEnte.git
+[submodule "src/plugins/ValuersManagement"]
+	path = src/plugins/ValuersManagement
+	url = git@github.com:mapasculturais/plugin-ValuersManagement.git
+[submodule "src/plugins/Blame"]
+	path = src/plugins/Blame
+	url = git@github.com:mapasculturais/plugin-MapasBlame.git
+[submodule "src/plugins/SpamDetector"]
+	path = src/plugins/SpamDetector
+	url = git@github.com:mapasculturais/plugin-SpamDetector.git

@@ -78,6 +78,7 @@ In development, `dev/docker-compose.yml` bind-mounts `dev/config.d/` over `confi
 - Extension points are wired through `MapasCulturais\Hooks` (`src/core/Hooks.php`), a WordPress-style hook/filter registry attached to the `App` singleton — modules/plugins/themes register callbacks against named hooks rather than the core dispatching to them directly. When tracing "who does X", grep for the relevant hook name across `src/core`, `src/modules`, and the active theme/plugins rather than assuming a fixed call path.
 - Themes, plugins, and any `src/modules/*` package can each carry their own `package.json`/pnpm workspace member for frontend assets (Vue components, sass) built via `laravel-mix`.
 - Themes and plugins that live outside the base app (e.g. `Pnab`, `AldirBlanc`, `MultipleLocalAuth`) are added as **git submodules** under `src/themes/<Name>` or `src/plugins/<Name>`, and separately bind-mounted in `dev/docker-compose.yml` in addition to the general `../src:/var/www/src` mount. See `instrucao.md` for the exact, tested procedure (including the `-f` flag needed for `git submodule add` under `src/plugins/*`, which `.gitignore` excludes by default) and the pnpm/permission gotchas above.
+- The `Pnab` theme (`src/themes/Pnab`) is being used as a **reference model only** for the `ConectaEnte` plugin (`src/plugins/ConectaEnte`) — the intent is to replicate/migrate its logic into the plugin, not to keep `Pnab` as the long-term active theme. Concretely: things like `Pnab\Theme::register()` registering the `GestorCultBr` role (`src/themes/Pnab/Theme.php`, see `Definitions\Role` + `$app->registerRole($def)`) need to be replicated in `ConectaEnte\Plugin::register()` instead, since `ConectaEnte` is the plugin actually meant to own that behavior going forward. When touching `ConectaEnte`, check whether `Pnab\Theme` already has the equivalent logic to port over, rather than assuming it needs to be written from scratch.
 
 ## Core app structure
 
@@ -85,6 +86,10 @@ In development, `dev/docker-compose.yml` bind-mounts `dev/config.d/` over `confi
 - Entities live in `src/core/Entities`, mapped via Doctrine annotations, and extend the base `MapasCulturais\Entity`. Domain concepts (Agent, Space, Event, Project, Opportunity, Registration, Seal, ...) each have a corresponding permission-cache entity (e.g. `AgentPermissionCache`) — permission checks are precomputed/cached rather than evaluated ad hoc on every request; see `documentation/docs/mc_permission_cache.md`.
 - Controllers (`src/core/Controllers`) map roughly 1:1 to entity types and register their own routes.
 - `public/index.php` is the sole HTTP entry point — it just requires `bootstrap.php` and calls `$app->run()`; all real dispatch happens through Slim + the hooks system.
+
+## Code style
+
+- Comments: follow Robert C. Martin's *Clean Code* — a comment is only justified when the code itself can't express the intent (a non-obvious WHY, a workaround, a warning of consequences). Don't add comments that restate WHAT the code does (well-named identifiers already do that); prefer renaming/extracting over explaining. This applies repo-wide, not just to `ConectaEnte`.
 
 ## Composer / PHP
 
