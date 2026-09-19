@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "pt-BR"
+early_access: false
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: true
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - develop
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/vendor/**"
+    - "!**/pnpm-lock.yaml"
+    - "!**/*.min.js"
+    - "!**/*.min.css"
+    - "!src/modules/Components/assets/js/vue-init.js"
+    - "!**/assets/fonts/**"
+  path_instructions:
+    - path: "src/plugins/ConectaEnte/**"
+      instructions: |
+        Plugin PHP do Mapas Culturais. Verifique se controllers estendem
+        \MapasCulturais\Controller, se as views ficam em views/{controllerId}/
+        e se as permissões são checadas via UserAccessService.
+    - path: "**/*.php"
+      instructions: |
+        PHP 8.3, Doctrine ORM 2.16 e Slim 4. Comentários só quando explicam o
+        PORQUÊ (Clean Code); não comente o que o código já expressa.
+        Textos exibidos ao usuário devem usar i::__() / i::_e() para tradução.
+    - path: "tests/**"
+      instructions: |
+        Prefira os Builders/Directors de tests/src em vez de construir entidades manualmente.
+
+chat:
+  auto_reply: true
